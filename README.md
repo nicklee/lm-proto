@@ -33,12 +33,30 @@ This app is a static Vite build. Pushing to `main` runs [`.github/workflows/depl
    git add .
    git commit -m "Initial commit"
    git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/lm-proto.git
+   git remote add origin git@github.com:YOUR_USERNAME/lm-proto.git
    git push -u origin main
    ```
 
 3. In the repo on GitHub: **Settings → Pages → Build and deployment → Source** → choose **GitHub Actions**.
 4. After the workflow finishes, open **Settings → Pages** for the live URL (typically `https://YOUR_USERNAME.github.io/lm-proto/`).
+
+### Password protection (prototype)
+
+The live site can show a password screen before the app loads. This keeps casual visitors out; it is **not** strong security (the hash is in the built JavaScript).
+
+1. In GitHub: **Settings → Secrets and variables → Actions → New repository secret**
+2. Name: `PROTOTYPE_PASSWORD` — value: your chosen password (plain text; the workflow hashes it at build time)
+3. Push to `main` or re-run the deploy workflow
+
+Locally, add to `.env.local` (hash only, not the plain password):
+
+```bash
+printf '%s' 'your-password' | shasum -a 256
+# Copy the hex string into:
+# VITE_PROTOTYPE_PASSWORD_HASH=...
+```
+
+Leave `VITE_PROTOTYPE_PASSWORD_HASH` unset for local dev with no gate.
 
 ### Preview production build locally
 

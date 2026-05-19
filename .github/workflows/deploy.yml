@@ -33,6 +33,17 @@ jobs:
             echo "BASE_PATH=/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
           fi
 
+      - name: Set prototype password hash
+        env:
+          PROTOTYPE_PASSWORD: ${{ secrets.PROTOTYPE_PASSWORD }}
+        run: |
+          if [ -n "$PROTOTYPE_PASSWORD" ]; then
+            HASH=$(printf '%s' "$PROTOTYPE_PASSWORD" | sha256sum | awk '{print $1}')
+          else
+            HASH="7624cde6ff7176835ff3ef8ae23c98db72966fe6023c00f5309b85370464050e"
+          fi
+          echo "VITE_PROTOTYPE_PASSWORD_HASH=$HASH" >> "$GITHUB_ENV"
+
       - run: npm ci
       - run: npm run build
 

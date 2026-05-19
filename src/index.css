@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Arial", sans-serif;
+  --font-display: "Museum Sans", "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-museum-black: #121212;
+  --color-museum-mint: #C5F1D4;
+  --color-museum-lavender: #D4AFF0;
+  --color-museum-charcoal: #1A1A1A;
+}
+
+@layer base {
+  body {
+    @apply bg-museum-black text-white font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold uppercase tracking-tight;
+  }
+}
+
+.markdown-body {
+  @apply text-inherit;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "London Museum - Smithfield Countdown",
+  "description": "High-fidelity homepage prototype for the new London Museum, featuring a cinematic splash transition, live countdown, and interactive hero carousel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -40,7 +40,8 @@ interface Slide {
 }
 
 // --- Constants ---
-const TARGET_DATE = new Date('2026-02-23T00:00:00');
+const COUNTDOWN_HOURS = 96;
+const COUNTDOWN_MS = COUNTDOWN_HOURS * 60 * 60 * 1000;
 const SLIDES: Slide[] = [
   {
     id: 1,
@@ -74,22 +75,23 @@ const SLIDES: Slide[] = [
 // --- Helper Components ---
 
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState<{days: number, hours: number, min: number, sec: number}>({
-    days: 0, hours: 0, min: 0, sec: 0
+  const endTimeRef = useRef(Date.now() + COUNTDOWN_MS);
+  const [timeLeft, setTimeLeft] = useState<{ hours: number; min: number; sec: number }>({
+    hours: COUNTDOWN_HOURS,
+    min: 0,
+    sec: 0,
   });
 
   useEffect(() => {
     const calculateTime = () => {
-      const now = new Date();
-      const diff = TARGET_DATE.getTime() - now.getTime();
-      
-      if (diff <= 0) return { days: 0, hours: 0, min: 0, sec: 0 };
-      
+      const diff = endTimeRef.current - Date.now();
+
+      if (diff <= 0) return { hours: 0, min: 0, sec: 0 };
+
       return {
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        hours: Math.floor(diff / (1000 * 60 * 60)),
         min: Math.floor((diff / 1000 / 60) % 60),
-        sec: Math.floor((diff / 1000) % 60)
+        sec: Math.floor((diff / 1000) % 60),
       };
     };
 
@@ -104,10 +106,9 @@ const CountdownTimer = () => {
   return (
     <div className="flex gap-4 md:gap-8">
       {[
-        { label: 'DAYS', value: timeLeft.days },
         { label: 'HOURS', value: timeLeft.hours },
         { label: 'MINS', value: timeLeft.min },
-        { label: 'SECS', value: timeLeft.sec }
+        { label: 'SECS', value: timeLeft.sec },
       ].map((item) => (
         <div key={item.label} className="flex flex-col items-center">
           <span className="text-4xl md:text-7xl font-display font-light tracking-tighter">

@@ -42,6 +42,9 @@ interface Slide {
 // --- Constants ---
 const COUNTDOWN_HOURS = 96;
 const COUNTDOWN_MS = COUNTDOWN_HOURS * 60 * 60 * 1000;
+const SPLASH_VIDEO_URL = `${import.meta.env.BASE_URL}videos/our-time-daytime-cgi.mp4`;
+const SPLASH_POSTER_URL =
+  'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&q=80&w=2600';
 const SLIDES: Slide[] = [
   {
     id: 1,
@@ -376,13 +379,14 @@ export default function App() {
           >
             {/* Background */}
             <div className="absolute inset-0 bg-museum-charcoal text-white">
-              <img 
-                src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&q=80&w=2600" 
-                className="w-full h-full object-cover opacity-80"
-                alt="London Museum Atmospheric"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={SPLASH_POSTER_URL}
+                className="absolute inset-0 w-full h-full object-cover"
+                src={SPLASH_VIDEO_URL}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
             </div>
